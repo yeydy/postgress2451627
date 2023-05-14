@@ -1,0 +1,245 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.2
+-- Dumped by pg_dump version 15.2
+
+-- Started on 2023-05-14 14:35:34
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 214 (class 1259 OID 16471)
+-- Name: book; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.book (
+    id integer NOT NULL,
+    tittle character varying(250) NOT NULL,
+    slug character varying(250),
+    description text,
+    price double precision NOT NULL,
+    cover_path character varying(250),
+    file_path character varying(250),
+    created_at date NOT NULL,
+    update_at date
+);
+
+
+ALTER TABLE public.book OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 16493)
+-- Name: sales_items; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.sales_items (
+    id integer NOT NULL,
+    id_book integer NOT NULL,
+    id_order integer NOT NULL,
+    price double precision NOT NULL,
+    downs_ava double precision
+);
+
+
+ALTER TABLE public.sales_items OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1259 OID 16483)
+-- Name: sales_order; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.sales_order (
+    id integer NOT NULL,
+    id_user integer NOT NULL,
+    total double precision NOT NULL,
+    payment_status character varying(45) NOT NULL,
+    created_at date NOT NULL
+);
+
+
+ALTER TABLE public.sales_order OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1259 OID 16478)
+-- Name: user; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."user" (
+    id integer NOT NULL,
+    firsname character varying(45) NOT NULL,
+    lastname character varying(45) NOT NULL,
+    fullname character varying(100) NOT NULL,
+    email character varying(45) NOT NULL,
+    password character varying(45) NOT NULL,
+    role character varying(45) NOT NULL,
+    created_at date NOT NULL,
+    updated_at date
+);
+
+
+ALTER TABLE public."user" OWNER TO postgres;
+
+--
+-- TOC entry 3337 (class 0 OID 16471)
+-- Dependencies: 214
+-- Data for Name: book; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.book (id, tittle, slug, description, price, cover_path, file_path, created_at, update_at) FROM stdin;
+10	Edipo el Rey	edipoelrey.com	La obra nos presenta a Edipo en su momento de mayor esplendor, como rey de Tebas y esposo de Yocasta. Para salvar a la ciudad de la peste que la asola, comienza a investigar la muerte del rey anterior: Layo. Poco a poco se descubre la verdad: Edipo es el asesino que busca. Layo era su padre.	60000	\N	\N	1985-11-05	\N
+9	El moro	elmoro.com	Cuenta sus aventuras y desventuras, dichas y desdichas bajo el cruel trato de sus amos y de las personas que, circunstancialmente, se beneficiaron de su trabajo.	55000	\N	\N	1897-03-04	\N
+8	Cien años de soledad	cienañosdesoledad.com	trata un siglo en la vida de la familia Buendía, cuyo patriarca, José Arcadio Buendía, fundó el pueblo ficticio de Macondo, en Colombia. La novela es considerada una obra maestra de la literatura latinoamericana y uno de los ejemplos clásicos del realismo mágico.	70000	\N	\N	1967-06-06	\N
+7	Holw´s movle castle	elcastillovagabundo.com	Cuando la Bruja del Páramo convierte a Sophie Hatter en una anciana, la joven abandona la sombrerería familiar para pedir ayuda en el único lugar mágico que se le ocurre: el castillo ambulante que atemoriza a los habitantes de Market Chipping. Pues dentro no sólo se halla un demonio del fuego, sino también el perverso mago Howl, tan diestro en realizar hechizos como en robar los corazones de las damas.	75000	\N	\N	1986-04-01	\N
+6	Identico al ser humano	identicoalserhumano.com	Idéntico al ser humano es una novela que emborrona la linde entre las nociones de identidad y alteridad. Y lo mejor de todo es que esta confusión lógica acaba embargando al mismo tiempo al lector que siente cómo, página a página, se ciñe con fuerza creciente sobre su sentido común el nudo de la incertidumbre.	65000	\N	\N	2010-10-13	\N
+5	La divina comedia	ladivinacomedia.com	El tema de la obra es el recorrido del poeta a través del más allá. En su obra se encuentra gran capacidad para describir el infierno, los círculos, los sufrimientos y los pecadores.	47000	\N	\N	1472-05-05	\N
+4	El Principito	elprincipito.com	La historia se centra en un pequeño príncipe que realiza una travesía por el universo. En este viaje descubre la extraña forma en que los adultos ven la vida y comprende el valor del amor y la amistad.	40000	\N	\N	1943-04-06	\N
+3	Lazarillo de Tormes	lazarilodetormes.com	La novela Lazarillo de Tormes gira entorno a Lázaro, un niño ingenuo que, debido a las adversidades y complejidades que atraviesa, se convierte en un joven pícaro que lucha por sobrevivir. Es un relato en primera persona en el que Lázaro cuenta la historia de su vida desde su infancia.	35000	\N	\N	1620-03-15	\N
+2	Mujercitas	mujercitas.com	La historia se centra en la vida de cuatro hermanas adolescentes con personalidades muy dispares que, pese a las dificultades, intentan superarse así mismas en el contexto de la Guerra de Secesión.	47000	\N	\N	1915-02-13	\N
+1	Niebla	niebla.com	Aborda la inseguridad del hombre moderno que se preocupa por su destino y su mortalidad, un tema unamuniano por antonomasia.	45000	\N	\N	1914-03-12	\N
+\.
+
+
+--
+-- TOC entry 3340 (class 0 OID 16493)
+-- Dependencies: 217
+-- Data for Name: sales_items; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.sales_items (id, id_book, id_order, price, downs_ava) FROM stdin;
+20	10	110	60000	\N
+19	9	109	55000	\N
+18	8	108	70000	\N
+17	7	107	75000	\N
+16	6	106	65000	\N
+15	5	105	47000	\N
+14	4	104	40000	\N
+13	3	103	35000	\N
+12	2	102	47000	\N
+11	1	101	45000	\N
+\.
+
+
+--
+-- TOC entry 3339 (class 0 OID 16483)
+-- Dependencies: 216
+-- Data for Name: sales_order; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.sales_order (id, id_user, total, payment_status, created_at) FROM stdin;
+110	1010	60000	En proceso	2022-06-10
+109	1009	55000	Aprobado	2022-09-18
+108	1008	70000	Aprobado	2022-06-30
+107	1007	75000	Rechazado	2023-04-09
+106	1006	65000	Aprobado	2022-06-10
+105	1005	47000	En proceso	2023-01-27
+104	1004	40000	En proceso	2022-05-25
+103	1003	35000	En proceso	2022-10-15
+102	1002	47000	Aprobado	2022-12-21
+101	1001	45000	Aprobado	2023-04-15
+\.
+
+
+--
+-- TOC entry 3338 (class 0 OID 16478)
+-- Dependencies: 215
+-- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."user" (id, firsname, lastname, fullname, email, password, role, created_at, updated_at) FROM stdin;
+1010	Marina 	Mariño	Marina Mariño Baez	marmar@gmail.com	marmamr1234	cliente	2022-06-10	\N
+1009	David	Cabrera	David Cabrera Mariño	davicm@gmail.com	davicm1234	cliente	2022-09-18	\N
+1007	Camilo	Perez	Camilo Perez Flores	camiperflo@gmail.com	camiper1234	cliente	2023-04-09	\N
+1006	Jair	Mariño	Jair Mariño Arias	jairmar@gmail.com	jairmar1234	cliente	2022-06-10	\N
+1005	Sandra	Mariño	Sandra Mariño Baez	sandramab@gmail.com	sanmab1234	cliente	2023-01-27	\N
+1004	Yahir 	Perez	Yahir Perez Sepulveda	yahirper@gmail.com	yahip1234	cliente	2022-05-25	\N
+1003	Jair	Perez	Jair Perez Mariño	jairper@gmail.com	jair1234	cliente	2022-10-15	\N
+1002	Camilo	Garcés	Camilo Garcés Cuello	camigarc@gmail.com	camigarc1234	cliente	2022-12-21	\N
+1001	Jaireth	Perez	Jaireth Perez Mariño	jairisp@gmail.com	jaiper1234	cliente	2023-04-15	\N
+1008	Deivid	Garcia	Deivid Jeampiere Garcia	deivigar@gmail.com	deivi1234	cliente	2022-06-30	\N
+\.
+
+
+--
+-- TOC entry 3185 (class 2606 OID 16477)
+-- Name: book pk_id_book; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.book
+    ADD CONSTRAINT pk_id_book PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3191 (class 2606 OID 16497)
+-- Name: sales_items pk_id_items; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sales_items
+    ADD CONSTRAINT pk_id_items PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3189 (class 2606 OID 16487)
+-- Name: sales_order pk_id_order; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sales_order
+    ADD CONSTRAINT pk_id_order PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3187 (class 2606 OID 16482)
+-- Name: user pk_id_user; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."user"
+    ADD CONSTRAINT pk_id_user PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3193 (class 2606 OID 16498)
+-- Name: sales_items fk_id_book; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sales_items
+    ADD CONSTRAINT fk_id_book FOREIGN KEY (id_book) REFERENCES public.book(id);
+
+
+--
+-- TOC entry 3194 (class 2606 OID 16503)
+-- Name: sales_items fk_id_order; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sales_items
+    ADD CONSTRAINT fk_id_order FOREIGN KEY (id_order) REFERENCES public.sales_order(id);
+
+
+--
+-- TOC entry 3192 (class 2606 OID 16488)
+-- Name: sales_order fk_id_user; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sales_order
+    ADD CONSTRAINT fk_id_user FOREIGN KEY (id_user) REFERENCES public."user"(id);
+
+
+-- Completed on 2023-05-14 14:35:34
+
+--
+-- PostgreSQL database dump complete
+--
+
