@@ -1,0 +1,96 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww37900\viewh21300\viewkind0
+\deftab560
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf0 -- Creaci\'f3n de la tabla "book"\
+CREATE TABLE IF NOT EXISTS public.book (\
+    id_book serial PRIMARY KEY,\
+    title character(250) NOT NULL,\
+    slug character(250) NOT NULL,\
+    description character(250) NOT NULL,\
+    price money NOT NULL,\
+    cover_path character(250) NOT NULL,\
+    file_path character(250) NOT NULL,\
+    created_at date NOT NULL,\
+    updated_at date NOT NULL\
+);\
+\
+-- Creaci\'f3n de la tabla "user"\
+CREATE TABLE IF NOT EXISTS public."user" (\
+    id_user serial PRIMARY KEY,\
+    firstname character(45) NOT NULL,\
+    lastname character(45) NOT NULL,\
+    fullname character(45) NOT NULL,\
+    email character(45) NOT NULL,\
+    password character(250) NOT NULL,\
+    role character(45) NOT NULL,\
+    created_at date NOT NULL,\
+    updated_at date NOT NULL\
+);\
+\
+-- Creaci\'f3n de la tabla "sales_order"\
+CREATE TABLE IF NOT EXISTS public.sales_order (\
+    id_order serial PRIMARY KEY,\
+    customer_id integer NOT NULL,\
+    total money NOT NULL,\
+    payment_status character(45) NOT NULL,\
+    created_at date NOT NULL,\
+    CONSTRAINT fk_customer_id FOREIGN KEY (customer_id)\
+        REFERENCES public."user" (id_user) ON UPDATE NO ACTION ON DELETE NO ACTION\
+);\
+\
+-- Creaci\'f3n de la tabla "sales_item"\
+CREATE TABLE IF NOT EXISTS public.sales_item (\
+    id_item serial PRIMARY KEY,\
+    book_id integer NOT NULL,\
+    order_id integer NOT NULL,\
+    price money NOT NULL,\
+    downs_ava integer NOT NULL,\
+    CONSTRAINT fk_book_id FOREIGN KEY (book_id)\
+        REFERENCES public.book (id_book) ON UPDATE NO ACTION ON DELETE NO ACTION,\
+    CONSTRAINT fk_order_id FOREIGN KEY (order_id)\
+        REFERENCES public.sales_order (id_order) ON UPDATE NO ACTION ON DELETE NO ACTION\
+);\
+\
+-- Inserci\'f3n de registros en la tabla "book"\
+INSERT INTO public.book (title, slug, description, price, cover_path, file_path, created_at, updated_at)\
+VALUES\
+    ('The Great Gu\'92d, 'the-great-g', 'A story about the American Dream', 19.99, '/covers/great-gatsby.jpg', '/files/great-gatsby.pdf', '2023-05-01', '2023-05-05'),\
+    ('Pride and Prejudice', 'pride-and-p', 'A classic love story', 14.99, '/covers/pride-prejudice.jpg', '/files/pride-prejudice.pdf', '2023-04-25', '2023-05-10'),\
+    ('To Kill a Mockingbird', 'to-kill-a-m', 'A powerful novel addressing racial injustice', 12.99, '/covers/mockingbird.jpg', '/files/mockingbird.pdf', '2023-05-03', '2023-05-08'),\
+    ('1984', '1984', 'A dystopian novel depicting a totalitarian society', 17.99, '/covers/1984.jpg', '/files/1984.pdf', '2023-05-07', '2023-05-12'),\
+    ('The Catcher in the Rye', 'catcher-in', 'A coming-of-age story', 15.99, '/covers/catcher-rye.jpg', '/files/catcher-rye.pdf', '2023-05-02', '2023-05-09');\
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 -- Inserci\'f3n de registros en la tabla "user"\
+INSERT INTO public."user" (firstname, lastname, fullname, email, password, role, created_at, updated_at)\
+VALUES\
+    ('John', 'Doe', 'John Doe', 'john@example.com', 'password123', 'customer', '2023-05-01', '2023-05-05'),\
+    ('Jane', 'Smith', 'Jane Smith', 'jane@example.com', 'password456', 'customer', '2023-04-25', '2023-05-10'),\
+    ('Michael', 'Johnson', 'Michael Johnson', 'michael@example.com', 'password789', 'customer', '2023-05-03', '2023-05-08'),\
+    ('Emily', 'Brown', 'Emily Brown', 'emily@example.com', 'passwordabc', 'customer', '2023-05-07', '2023-05-12'),\
+    ('David', 'Taylor', 'David Taylor', 'david@example.com', 'passworddef', 'customer', '2023-05-02', '2023-05-09');\
+\
+-- Inserci\'f3n de registros en la tabla "sales_order"\
+INSERT INTO public.sales_order (customer_id, total, payment_status, created_at)\
+VALUES\
+    (1, 39.98, 'paid', '2023-05-01'),\
+    (2, 29.98, 'paid', '2023-05-02'),\
+    (3, 12.99, 'pending', '2023-05-03'),\
+    (4, 17.99, 'pending', '2023-05-04'),\
+    (5, 15.99, 'paid', '2023-05-05');\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 -- Inserci\'f3n de registros en la tabla "sales_item"\
+INSERT INTO public.sales_item (book_id, order_id, price, downs_ava)\
+VALUES\
+    (1, 1, 19.99, 2),\
+    (2, 1, 14.99, 1),\
+    (3, 2, 12.99, 3),\
+    (4, 3, 17.99, 1),\
+    (5, 4, 15.99, 2);}
